@@ -9,35 +9,80 @@ import (
 	"strings"
 )
 
+func validarError(valorT string) float64 {
+	valor, error := strconv.ParseFloat(valorT, 64)
+	if error != nil {
+		log.Fatal(error)
+	}
+
+	return valor
+}
+
 func main() {
 
 	// scanner para leer lo que ingrese el usuario
 	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Println("Ingrese la operacion (suma, de la forma numero + numero, ej: 2+2): ")
+	fmt.Println("Elija la operacion que desea (Solo el numero ej: 1)")
+	fmt.Println("1. Suma(+)")
+	fmt.Println("2. Resta(-)")
+	fmt.Println("3. Multiplicacion(*)")
+	fmt.Println("4. Divicion(/)")
 	scanner.Scan()
 
 	// sacar el texto ingresado
+	opcion := scanner.Text()
+	// fmt.Println("La opcion ingresada es: ", opcion)
+
+	fmt.Println("\nIngrese la operacion (ej: 2+2)")
+	scanner.Scan()
 	operacion := scanner.Text()
+	// fmt.Println("La operacion ingresada es: ", operacion)
 
-	fmt.Println("La operacion ingresada es: ", operacion)
+	var respuesta float64
 
-	// split Tomar un string y fraccionarlo
-	valores := strings.Split(operacion, "+")
-
-	fmt.Println("Estos son los valores ingresados: ", valores)
-	fmt.Println("Primer y segundo valor sumados como texto: ", valores[0]+valores[1])
-
-	// convertimos valores string en enteros
-	operador1, error1 := strconv.Atoi(valores[0])
-	operador2, error2 := strconv.Atoi(valores[1])
-
-	if error1 != nil {
-		log.Fatal(error1)
+	// split tomar un string y fraccionarlo
+	switch opcion {
+	case "1":
+		// Suma
+		valores := strings.Split(operacion, "+")
+		for i := 0; i < len(valores); i++ {
+			valor := validarError(valores[i])
+			respuesta = respuesta + valor
+		}
+	case "2":
+		// Resta
+		valores := strings.Split(operacion, "-")
+		for i := 0; i < len(valores); i++ {
+			valor := validarError(valores[i])
+			if i == 0 {
+				respuesta = valor
+				continue
+			}
+			respuesta = respuesta - valor
+		}
+	case "3":
+		// Multiplicacion
+		valores := strings.Split(operacion, "*")
+		respuesta = 1
+		for i := 0; i < len(valores); i++ {
+			valor := validarError(valores[i])
+			respuesta = respuesta * valor
+		}
+	case "4":
+		// Divicion
+		valores := strings.Split(operacion, "/")
+		for i := 0; i < len(valores); i++ {
+			valor := validarError(valores[i])
+			if i == 0 {
+				respuesta = valor
+				continue
+			}
+			respuesta = respuesta / valor
+		}
+	default:
+		log.Fatal("\nOpcion no valida ", opcion)
 	}
-	if error2 != nil {
-		log.Fatal(error2)
-	}
 
-	fmt.Println("Suma de los dos operadores matematicamente: ", operador1+operador2)
+	fmt.Println("\nLa respuesta es:", respuesta)
 
 }
