@@ -9,6 +9,14 @@ import (
 	"strings"
 )
 
+func leerEntrada() string {
+	// scanner para leer lo que ingrese el usuario
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+
+	return scanner.Text()
+}
+
 func validarError(valorT string) float64 {
 	valor, error := strconv.ParseFloat(valorT, 64)
 	if error != nil {
@@ -20,23 +28,16 @@ func validarError(valorT string) float64 {
 
 func main() {
 
-	// scanner para leer lo que ingrese el usuario
-	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("Elija la operacion que desea (Solo el numero ej: 1)")
 	fmt.Println("1. Suma(+)")
 	fmt.Println("2. Resta(-)")
 	fmt.Println("3. Multiplicacion(*)")
 	fmt.Println("4. Divicion(/)")
-	scanner.Scan()
 
-	// sacar el texto ingresado
-	opcion := scanner.Text()
-	// fmt.Println("La opcion ingresada es: ", opcion)
+	opcion := leerEntrada()
 
 	fmt.Println("\nIngrese la operacion (ej: 2+2)")
-	scanner.Scan()
-	operacion := scanner.Text()
-	// fmt.Println("La operacion ingresada es: ", operacion)
+	operacion := leerEntrada()
 
 	var respuesta float64
 
