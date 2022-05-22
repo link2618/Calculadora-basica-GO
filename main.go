@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -27,8 +28,15 @@ func main() {
 	fmt.Println("Primer y segundo valor sumados como texto: ", valores[0]+valores[1])
 
 	// convertimos valores string en enteros
-	operador1, _ := strconv.Atoi(valores[0])
-	operador2, _ := strconv.Atoi(valores[1])
+	operador1, error1 := strconv.Atoi(valores[0])
+	operador2, error2 := strconv.Atoi(valores[1])
+
+	if error1 != nil {
+		log.Fatal(error1)
+	}
+	if error2 != nil {
+		log.Fatal(error2)
+	}
 
 	fmt.Println("Suma de los dos operadores matematicamente: ", operador1+operador2)
 
